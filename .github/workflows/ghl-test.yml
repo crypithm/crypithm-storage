@@ -1,0 +1,23 @@
+# name: temporary-deployment-storage
+# on:
+#   push:
+#     branches:
+#       - publish
+# jobs:
+#   build:
+#     name: deploy
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: using ssh for deployment
+#       uses: appleboy/ssh-action@master
+#       with:
+#         host: ${{ secrets.storageHOST }}
+#         username: ${{ secrets.storageUSERNAME }}
+#         key: ${{ secrets.storageKEY }}
+#         port: 22
+#         script: |
+#           cd /var/publish-dir/crypithm-storage
+#           sudo git pull
+#           sudo go build server.go
+#           sudo mv server /var/www/api
+#           sudo systemctl restart crypithmserver
