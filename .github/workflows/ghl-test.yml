@@ -2,7 +2,7 @@ name: temporary-deployment-storage
 on:
   push:
     branches:
-      - publish
+      - main
 jobs:
   build:
     name: deploy
@@ -20,4 +20,4 @@ jobs:
           sudo git pull
           sudo go build server.go
           sudo mv server /var/www/api
-          sudo systemctl restart crypithmserver
+          sudo systemctl restart storageserver
