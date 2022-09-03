@@ -62,7 +62,7 @@ func Uploadhandle(w http.ResponseWriter, r *http.Request) {
 	startbyte, _ := strconv.Atoi(r.Header.Get("startrange"))
 	n, err := target.WriteAt(uploadedBytes, int64(startbyte))
 	if n != len(uploadedBytes) {
-		message, _ = json.Marshal(Response{"SizeError"+string(n)+", "+string(startbyte)})
+		message, _ = json.Marshal(Response{"SizeError"+strconv.Itoa(n)+", "+strconv.Itoa(startbyte)})
 		fmt.Fprintf(w, string(message))
 		return
 	}
