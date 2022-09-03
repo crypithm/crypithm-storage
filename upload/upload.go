@@ -53,7 +53,7 @@ func Uploadhandle(w http.ResponseWriter, r *http.Request) {
 
 	fileName := val
 	rdb.Set(ctx, token, fileName, time.Minute*2)
-	target, e := os.OpenFile("/storedblob/"+fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0777)
+	target, e := os.OpenFile("/storedblob/"+fileName, os.O_CREATE|os.O_WRONLY, 0777)
 	if e != nil {
 		message, _ = json.Marshal(Response{"OpenError"})
 		fmt.Fprintf(w, string(message))
@@ -62,12 +62,12 @@ func Uploadhandle(w http.ResponseWriter, r *http.Request) {
 	startbyte, _ := strconv.Atoi(r.Header.Get("startrange"))
 	n, err := target.WriteAt(uploadedBytes, int64(startbyte))
 	if err != nil {
-		message, _ = json.Marshal(Response{"WriteError"+ err.Error()})
+		message, _ = json.Marshal(Response{"WriteError"})
 		fmt.Fprintf(w, string(message))
 		return
 	}	
 	if n != len(uploadedBytes) {
-		message, _ = json.Marshal(Response{"SizeError"+strconv.Itoa(n)+", "+strconv.Itoa(startbyte)})
+		message, _ = json.Marshal(Response{"SizeError"})
 		fmt.Fprintf(w, string(message))
 		return
 	}
