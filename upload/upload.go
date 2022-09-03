@@ -39,7 +39,7 @@ func Uploadhandle(w http.ResponseWriter, r *http.Request) {
 
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
-		Password: "",
+		Password: "69GUaedM9MNApmU5wugCz5T7gdBa6K",
 		DB:       0,
 	})
 	val, e := rdb.Get(ctx, token).Result()
