@@ -55,25 +55,25 @@ func Uploadhandle(w http.ResponseWriter, r *http.Request) {
 	rdb.Set(ctx, token, fileName, time.Minute*2)
 	target, e := os.OpenFile("/storedblob/"+fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0777)
 	if e != nil {
-		message, _ = json.Marshal(Response{"Error"})
+		message, _ = json.Marshal(Response{"OpenError"})
 		fmt.Fprintf(w, string(message))
 		return
 	}
 	startbyte, _ := strconv.Atoi(r.Header.Get("StartRange"))
 	n, err := target.WriteAt(uploadedBytes, int64(startbyte))
 	if n != len(uploadedBytes) {
-		message, _ = json.Marshal(Response{"Error"})
+		message, _ = json.Marshal(Response{"SizeError"})
 		fmt.Fprintf(w, string(message))
 		return
 	}
 	if err != nil {
-		message, _ = json.Marshal(Response{"Error"})
+		message, _ = json.Marshal(Response{"WriteError"})
 		fmt.Fprintf(w, string(message))
 		return
 	}
 
 	if target.Close(); e != nil {
-		message, _ = json.Marshal(Response{"Error"})
+		message, _ = json.Marshal(Response{"CloseError"})
 		fmt.Fprintf(w, string(message))
 	} else {
 		message, _ = json.Marshal(Response{"Success"})
