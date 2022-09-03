@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/api/upload", upload.Uploadhandle)
-	http.HandleFunc("/api/download", download.Downloader)
+	http.HandleFunc("/upload", upload.Uploadhandle)
+	http.HandleFunc("/download", download.Downloader)
 	err := http.ListenAndServe(":22048", nil)
 	if err != nil {
 		fmt.Println(err)
