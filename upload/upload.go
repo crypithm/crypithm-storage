@@ -61,13 +61,13 @@ func Uploadhandle(w http.ResponseWriter, r *http.Request) {
 	}
 	startbyte, _ := strconv.Atoi(r.Header.Get("startrange"))
 	n, err := target.WriteAt(uploadedBytes, int64(startbyte))
-	if n != len(uploadedBytes) {
-		message, _ = json.Marshal(Response{"SizeError"+strconv.Itoa(n)+", "+strconv.Itoa(startbyte)})
+	if err != nil {
+		message, _ = json.Marshal(Response{"WriteError"+ err.Error()})
 		fmt.Fprintf(w, string(message))
 		return
-	}
-	if err != nil {
-		message, _ = json.Marshal(Response{"WriteError"})
+	}	
+	if n != len(uploadedBytes) {
+		message, _ = json.Marshal(Response{"SizeError"+strconv.Itoa(n)+", "+strconv.Itoa(startbyte)})
 		fmt.Fprintf(w, string(message))
 		return
 	}
